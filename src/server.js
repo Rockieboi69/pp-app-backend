@@ -8,21 +8,18 @@ const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
   try {
-    console.log("Starting server...");
+    console.log("Connecting to Database...");
     await connectDB();
+    console.log("MongoDB Connected Successfully ✅");
 
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`🔗 Frontend can now connect via CORS`);
     });
   } catch (err) {
-    console.log("DB connection failed:", err.message);
+    console.error("❌ Server start failed:", err.message);
     process.exit(1);
   }
 };
 
 startServer();
-
-
-
-
-
