@@ -5,7 +5,7 @@ import helmet from "helmet"; // Recommended for security
 
 import authRoutes from "./routes/authRoutes.js";
 import parkingRoutes from "./routes/parkingRoutes.js";
-import slotRoutes from "./routes/slotRoutes.js";
+import slotRoutes from "./routes/SlotRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
