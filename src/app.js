@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import helmet from "helmet"; // Recommended for security
+import helmet from "helmet";
 
 import authRoutes from "./routes/authRoutes.js";
 import parkingRoutes from "./routes/parkingRoutes.js";
@@ -13,19 +13,25 @@ import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 const app = express();
 
 // --- Middleware Setup ---
-app.use(helmet()); // 1. Adds security headers
+app.use(helmet());
+
 app.use(cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"], // Allow Vite's default ports
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
+  origin: [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://pp-app-frontend.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
 }));
-app.use(express.json()); // 2. Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // 3. Parse URL-encoded bodies
-app.use(morgan("dev")); // 4. Log requests to console
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
 // --- Health Check Route ---
 app.get("/", (req, res) => {
-  res.json({ 
+  res.json({
     status: "Success",
     message: "Parking App Backend is running",
     timestamp: new Date().toISOString()
