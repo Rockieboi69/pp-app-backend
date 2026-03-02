@@ -5,7 +5,7 @@ import helmet from "helmet";
 
 import authRoutes from "./routes/authRoutes.js";
 import parkingRoutes from "./routes/parkingRoutes.js";
-import slotRoutes from "./routes/slotRoutes.js";
+import slotRoutes from "./routes/SlotRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 // --- API Routes ---
 app.use("/api/auth", authRoutes);
 app.use("/api/parking", parkingRoutes);
-app.use("/api/slots", slotRoutes);   // ✅ lowercase s
+app.use("/api/slots", SlotRoutes);   // ✅ lowercase s
 app.use("/api/bookings", bookingRoutes);
 
 // --- Error Handling ---
