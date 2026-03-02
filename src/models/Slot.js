@@ -2,32 +2,40 @@ import mongoose from "mongoose";
 
 const slotSchema = new mongoose.Schema(
   {
-    parkingId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Parking",
-      required: true,
-    },
-
-    slotNumber: {
-      type: Number,
-      required: true,
-    },
-
-    type: {
+    name: {
       type: String,
-      enum: ["car", "bike"],
-      default: "car",
+      required: true,
     },
-
+    distance: {
+      type: String,
+      required: true,
+    },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    status: {
+      type: String,
+      enum: ["High Demand", "Available", "Congested"],
+      default: "Available",
+    },
+    image: {
+      type: String,
+      required: true,
+    },
+    // Keep these if you plan to use them for logic later
     isActive: {
       type: Boolean,
       default: true,
     },
   },
-  { timestamps: true }
+  { 
+    timestamps: true,
+    // 🔥 FIX: This forces Mongoose to look at the 'slot' collection (singular) 
+    // matching your screenshot exactly.
+    collection: 'slot' 
+  }
 );
-
-slotSchema.index({ parkingId: 1, slotNumber: 1 }, { unique: true });
 
 const Slot = mongoose.model("Slot", slotSchema);
 
