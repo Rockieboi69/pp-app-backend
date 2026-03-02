@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 // --- API Routes ---
 app.use("/api/auth", authRoutes);
 app.use("/api/parking", parkingRoutes);
-app.use("/api/slots", SlotRoutes);   // ✅ lowercase s
+app.use("/api/slots", slotRoutes);   // ✅ lowercase s
 app.use("/api/bookings", bookingRoutes);
 
 // --- Error Handling ---
