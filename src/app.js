@@ -5,9 +5,8 @@ import helmet from "helmet";
 
 import authRoutes from "./routes/authRoutes.js";
 import parkingRoutes from "./routes/parkingRoutes.js";
-// 🔥 FIX: Changed "SlotRoutes.js" to "slotRoutes.js" (lowercase 's') 
-// to prevent "Module Not Found" errors on Linux-based servers like Render.
-import slotRoutes from "./routes/SlotRoutes.js"; 
+// 🔥 FIX 1: Ensure the filename on your computer is exactly "slotRoutes.js" 
+import slotRoutes from "./routes/slotRoutes.js"; 
 import bookingRoutes from "./routes/bookingRoutes.js";
 
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
@@ -17,16 +16,17 @@ const app = express();
 // --- Middleware Setup ---
 app.use(helmet());
 
-// 🔥 UPDATED CORS: This allows your Vercel frontend to communicate with this Render backend.
+// 🔥 FIX 2: Explicitly list your Vercel URL to clear the CORS block
 app.use(cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://pp-app-frontend.vercel.app",
-    /\.vercel\.app$/ // Matches all Vercel preview/deployment URLs
+    "https://pp-app-frontend.vercel.app", 
+    /\.vercel\.app$/ 
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(express.json());
@@ -45,7 +45,10 @@ app.get("/", (req, res) => {
 // --- API Routes ---
 app.use("/api/auth", authRoutes);
 app.use("/api/parking", parkingRoutes);
-app.use("/api/slots", SlotRoutes); // Access this at https://your-url.onrender.com/api/slots
+
+// 🔥 FIX 3: Changed 'SlotRoutes' to 'slotRoutes' to match the import above
+app.use("/api/slots", SlotRoutes); 
+
 app.use("/api/bookings", bookingRoutes);
 
 // --- Error Handling ---
