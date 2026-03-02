@@ -5,8 +5,7 @@ import helmet from "helmet";
 
 import authRoutes from "./routes/authRoutes.js";
 import parkingRoutes from "./routes/parkingRoutes.js";
-// 🔥 FIX 1: Ensure the filename on your computer is exactly "slotRoutes.js" 
-import slotRoutes from "./routes/slotRoutes.js"; 
+import slotRoutes from "./routes/slotRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 
 import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
@@ -16,13 +15,12 @@ const app = express();
 // --- Middleware Setup ---
 app.use(helmet());
 
-// 🔥 FIX 2: Explicitly list your Vercel URL to clear the CORS block
 app.use(cors({
   origin: [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://pp-app-frontend.vercel.app", 
-    /\.vercel\.app$/ 
+    "https://pp-app-frontend.vercel.app",
+    /\.vercel\.app$/
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
@@ -33,7 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
-// --- Health Check Route ---
+// --- Health Check ---
 app.get("/", (req, res) => {
   res.json({
     status: "Success",
@@ -45,10 +43,7 @@ app.get("/", (req, res) => {
 // --- API Routes ---
 app.use("/api/auth", authRoutes);
 app.use("/api/parking", parkingRoutes);
-
-// 🔥 FIX 3: Changed 'SlotRoutes' to 'slotRoutes' to match the import above
-app.use("/api/slots", SlotRoutes); 
-
+app.use("/api/slots", slotRoutes);   // ✅ lowercase s
 app.use("/api/bookings", bookingRoutes);
 
 // --- Error Handling ---
