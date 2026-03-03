@@ -13,7 +13,15 @@ import { notFound, errorHandler } from "./middlewares/errorMiddleware.js";
 const app = express();
 
 // --- Middleware Setup ---
-app.use(helmet());
+// Change this line in app.js
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      "default-src": ["'self'"],
+      "img-src": ["'self'", "data:", "https://images.unsplash.com"], // 🔥 Allows Unsplash images
+    },
+  },
+}));
 
 app.use(cors({
   origin: [
